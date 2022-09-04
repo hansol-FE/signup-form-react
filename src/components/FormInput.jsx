@@ -32,7 +32,7 @@ const FormInput = ({ id, label, errData, setErrData, inputProps }) => {
                     break
                 case 'confirmPw':
                     result =
-                        value === formData['pw'].value ? true : 'invalidPwCheck'
+                        value === formData['pw'] ? true : 'invalidConfirmPw'
                     break
                 default:
                     return
@@ -64,13 +64,13 @@ const FormInput = ({ id, label, errData, setErrData, inputProps }) => {
                 ref={inputRef}
                 value={formData[id]}
                 onChange={(e) =>
-                    setFormData({ ...formData, [id]: e.target.value })
+                    setFormData((prev) => ({ ...prev, [id]: e.target.value }))
                 }
                 onBlur={() => checkRegex(id)}
                 {...inputProps}
             />
             <div className="mt-1 mb-3 text-xs text-red-500">
-                {ERROR_MSG[errData[id]]}
+                {errData[id] !== true ? ERROR_MSG[errData[id]] : ''}
             </div>
         </div>
     )
