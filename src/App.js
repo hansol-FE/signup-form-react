@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext, useRef, useState } from 'react'
 import './App.css'
 import Footer from './components/Footer'
 import Form from './components/Form'
@@ -16,13 +16,14 @@ export const FormContext = createContext({
 })
 function App() {
     const [formData, setFormData] = useState(initFormData)
+    const modalRef = useRef(null)
     return (
         <FormContext.Provider value={{ formData, setFormData }}>
             <section className="form-wrapper">
-                <Form />
+                <Form modalRef={modalRef} />
                 <Footer />
             </section>
-            <Modal />
+            <Modal ref={modalRef} />
         </FormContext.Provider>
     )
 }
