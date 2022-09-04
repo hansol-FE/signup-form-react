@@ -1,6 +1,12 @@
+import { useState } from 'react'
 import FormInput from './FormInput'
 
 const Form = () => {
+    const [errData, setErrData] = useState({
+        id: '',
+        pw: '',
+        confirmPW: '',
+    })
     return (
         <form
             id="form"
@@ -10,6 +16,8 @@ const Form = () => {
             <FormInput
                 id={'id'}
                 label={'아이디'}
+                errData={errData}
+                setErrData={setErrData}
                 inputProps={{
                     type: 'text',
                     placeholder: '아이디를 입력해주세요.',
@@ -19,6 +27,8 @@ const Form = () => {
             <FormInput
                 id={'pw'}
                 label={'비밀번호'}
+                errData={errData}
+                setErrData={setErrData}
                 inputProps={{
                     type: 'password',
                     placeholder: '비밀번호를 입력해주세요.',
@@ -28,6 +38,8 @@ const Form = () => {
             <FormInput
                 id={'confirmPw'}
                 label={'비밀번호 확인'}
+                errData={errData}
+                setErrData={setErrData}
                 inputProps={{
                     type: 'password',
                     placeholder: '비밀번호 확인을 입력해주세요.',
