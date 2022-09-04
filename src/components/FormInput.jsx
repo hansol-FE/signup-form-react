@@ -16,18 +16,19 @@ const FormInput = ({ id, label, errData, setErrData, inputProps }) => {
     const inputRef = useRef(null)
     const { formData, setFormData } = useContext(FormContext)
 
-    const checkRegex = () => {
+    const checkRegex = (inputId) => {
         let result
-        const value = formData[id]
+        const value = formData[inputId]
         if (value.length === 0) {
             result = 'required'
         } else {
-            switch (id) {
+            switch (inputId) {
                 case 'id':
                     result = ID_REGEX.test(value) ? true : 'invalidId'
                     break
                 case 'pw':
                     result = PW_REGEX.test(value) ? true : 'invalidPw'
+                    checkRegex('confirmPw')
                     break
                 case 'confirmPw':
                     result =
@@ -37,7 +38,10 @@ const FormInput = ({ id, label, errData, setErrData, inputProps }) => {
                     return
             }
         }
-        setErrData({ ...errData, [id]: result })
+        //react는 setState를 비동기적으로 실행함
+        // 순차적으로 진행하고싶다면 함수를 넘겨주면됨
+        //setErrData({ ...errData, [inputId]: result })
+        setErrData((prev) => ({ ...prev, [inputId]: result }))
     }
 
     useEffect(() => {
@@ -62,7 +66,7 @@ const FormInput = ({ id, label, errData, setErrData, inputProps }) => {
                 onChange={(e) =>
                     setFormData({ ...formData, [id]: e.target.value })
                 }
-                onBlur={checkRegex}
+                onBlur={() => checkRegex(id)}
                 {...inputProps}
             />
             <div className="mt-1 mb-3 text-xs text-red-500">
